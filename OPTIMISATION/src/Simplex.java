@@ -2,6 +2,9 @@ public class Simplex {
     // Для многомерной f1(x, y) = 100(y - x)^2 + 5(1 - x)^2
     //                 f2(x, y) = (x^2 + y - 11)^2 + (x + y^2 - 7)^2
 
+    // Использован класс Vector, в котором реализованиы действия
+    // над векторами (+, -, * alpha ...), его координатный вывод
+
     public static Vector simplex() {
         // Const description
         double alpha = 1.0;
@@ -21,7 +24,12 @@ public class Simplex {
             double f_v1 = func(v1.c());
             double f_v2 = func(v2.c());
             double f_v3 = func(v3.c());
-
+            System.out.println("========================");
+            System.out.println(f_v1);
+            System.out.println(f_v2);
+            System.out.println(f_v3);
+            System.out.println("========================");
+            // Sort =========================С=======
             if (f_v1 <= f_v2 && f_v1 <= f_v3){
                 best = v1;
                 if (f_v2 <= f_v3){
@@ -52,9 +60,17 @@ public class Simplex {
                     worst = v2;
                 }
             }
+            // Sort ================================
+
+
+            // mid = ((x1+x2) / 2; (y1+y2) / 2)
             Vector mid = new Vector((good.getX() + best.getX()) / 2, (good.getY() + best.getY()) / 2);
+
             // reflection
+
+            // xr = mid + alpha * (mid - worst)
             Vector xr = mid.add(mid.sub(worst).num_mul(alpha));
+
             if (func(xr.c()) < func(good.c())){
                 worst = xr;
             }else{
@@ -67,14 +83,18 @@ public class Simplex {
                 }
             }
             if (func(xr.c()) < func(best.c())){
-                // expansion
+                // expansion расстяжение
+
+                // xe = mid + gamma * (xr - mid)
                 Vector xe = mid.add(xr.sub(mid).num_mul(gamma));
+
                 if (func(xe.c()) < func(xr.c())){
                     worst = xe;
                 }else {worst = xr;}
             }
             if (func(xr.c()) < func(good.c())){
-                // contraction
+                // contraction сжатие
+                // xc = mid + betta * (worst - mid)
                 Vector xc = mid.add(worst.sub(mid).num_mul(betta));
                 if (func(xc.c()) < func(worst.c())){
                     worst = xc;
@@ -83,6 +103,7 @@ public class Simplex {
             v1 = worst;
             v2 = good;
             v3 = best;
+
         }
         return best;
     }
