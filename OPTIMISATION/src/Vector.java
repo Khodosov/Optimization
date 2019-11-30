@@ -3,6 +3,8 @@ public class Vector {
     private double y;
     private final double EPS = 0.00000001;
     private final double INF = 1000000000;
+    public double d1 = 999999999;
+    public double d2 = 999999999;
 
     public Vector(double x, double y) {
         this.x = x;
@@ -59,14 +61,14 @@ public class Vector {
 
     // Значение первой функции
     public double f() {
-        return 100 * Math.pow((y - x), 2) + 5 * Math.pow((1 - x), 2);
+        return 100 * Math.pow((y - Math.pow(x, 2)), 2) + 5 * Math.pow((1 - x), 2);
     }
 
     // Значение второй функции
     /*public double f(){
         return Math.pow((Math.pow(x, 2)) + y - 11, 2) +Math.pow((x + Math.pow(y, 2) - 7), 2);
     }*/
-    public double gradientSqure() {
+    public double gradientSquare() {
         return Math.pow(fdx1(), 2) + Math.pow(fdx2(), 2);
     }
 
@@ -74,11 +76,17 @@ public class Vector {
     // Значения производных берутся с обратным знаком из-за специфики алгоритма (направление антиградиента)
     public double fdx1() {
         double result = -1;
+        if (d1 != 999999999){
+            return d1;
+        }
         return result * (400 * Math.pow(x, 3) - 400 * x * y + 10 * x - 10);
     }
 
     public double fdx2() {
         double result = -1;
+        if (d2 != 999999999){
+            return  d2;
+        }
         return result * (200 * y - 200 * Math.pow(x, 2));
     }
 
@@ -92,8 +100,8 @@ public class Vector {
         return result * (2 * (Math.pow(x, 2) + y - 11) + 4 * y * (x + Math.pow(y, 2) - 7));
     }*/
     public double dihotomia() {
-        double l = -1 * 1000000000;
-        double r = 1000000000;
+        double l = -1 * INF;
+        double r = INF;
         double cl;
         double cr;
         while (Math.abs(r - l) > EPS) {
@@ -111,6 +119,6 @@ public class Vector {
     }
 
     public Vector getNextVector(double alpha) {
-        return new Vector(x + alpha * fdx1(), y * alpha * fdx2());
+        return new Vector(x + alpha * fdx1(), y + alpha * fdx2());
     }
 }

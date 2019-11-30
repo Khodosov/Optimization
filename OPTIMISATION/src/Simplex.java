@@ -24,11 +24,11 @@ public class Simplex {
             double f_v1 = func(v1.c());
             double f_v2 = func(v2.c());
             double f_v3 = func(v3.c());
-            System.out.println("========================");
+            /*System.out.println("========================");
             System.out.println(f_v1);
             System.out.println(f_v2);
             System.out.println(f_v3);
-            System.out.println("========================");
+            System.out.println("========================");*/
             // Sort =========================С=======
             if (f_v1 <= f_v2 && f_v1 <= f_v3){
                 best = v1;

@@ -16,4 +16,7 @@ public class Gradient {
         double y = point[1];
         return Math.pow((Math.pow(x, 2)) + y - 11, 2) +Math.pow((x + Math.pow(y, 2) - 7), 2);
     }*/
+
+
+
 }

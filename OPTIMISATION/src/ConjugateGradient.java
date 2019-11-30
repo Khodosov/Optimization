@@ -6,11 +6,12 @@ public class ConjugateGradient {
     // над векторами (+, -, * alpha ...), его координатный вывод
 
     // функции, для которых необходимо реализовать методы
-    private static double func(double[] point){
+    private static double func(double[] point) {
         double x = point[0];
         double y = point[1];
         return 100 * Math.pow((y - x), 2) + 5 * Math.pow((1 - x), 2);
     }
+
     /*private static double func(double[] point){
         double x = point[0];
         double y = point[1];
@@ -20,27 +21,35 @@ public class ConjugateGradient {
     public static final double EPS = 0.00000001;
     public static final double INF = 1000000000;
 
-    public static Vector conjugateGradient(){
+    public static Vector conjugateGradient() {
         int iterCount = 0;
         double alpha;
         double beta;
-        Vector v2 = new Vector(-10, -5);
+        Vector v2 = new Vector(-100, -5);
         Vector v1;
 
-        double gradientSquere = v2.gradientSqure();
-        double newGradientSqure;
+        double gradientSquare = v2.gradientSquare();
+        double newGradientSquare;
 
-        while (gradientSquere > EPS){
+        while (gradientSquare > EPS) {
             iterCount++;
             alpha = v2.dihotomia();
             v1 = v2;
             v2 = v2.getNextVector(alpha);
-            newGradientSqure = v2.gradientSqure();
-
-            if (iterCount % 10 == 0){
+            newGradientSquare = v2.gradientSquare();
+            if (iterCount % 10 == 0) {
                 beta = 0;
-            }else {beta = newGradientSqure/gradientSquere}
+            } else {
+                beta = newGradientSquare / gradientSquare;
+            }
+            v2.d1 = v2.fdx1() + beta * v1.fdx1();
+            v2.d2 = v2.fdx2() + beta * v1.fdx2();
+            gradientSquare = newGradientSquare;
+            System.out.println(iterCount + " ========================================================================");
+            System.out.println(v2.repr());
+            System.out.println("f(x, y) = " + func(v2.c()));
         }
-
+        System.out.println(iterCount);
+        return v2;
     }
 }

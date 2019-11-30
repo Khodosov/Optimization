@@ -12,6 +12,10 @@ public class Main {
         Dihotomia dihotomia = new Dihotomia();
         Golden golden = new Golden();
         Simplex simplex = new Simplex();
+        ConjugateGradient conjugateGradient = new ConjugateGradient();
+
+        System.out.println(ConjugateGradient.conjugateGradient().repr());
+        System.out.println("-----------------------------------------------------------------------------------------");
         System.out.println(Simplex.simplex().repr());
 
         /*double a = 0;
